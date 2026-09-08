@@ -172,18 +172,37 @@ let essayHTML = ''; essayData.forEach((q,i) => essayHTML += `<div class="questio
 // SUBMIT
 function submitQuiz() {
     let score = 0; 
-    for(let i=1; i<=10; i++){ let ans = document.getElementById('m'+i).value.toUpperCase(); if(ans === answers.matching['m'+i]) score++; }
-    for(let i=11; i<=20; i++){ let selected = document.querySelector(`input[name="q${i}"]:checked`); if(selected && selected.value[0] === answers.mcq['q'+i]) score++; }
+    for(let i=1; i<=10; i++){ 
+      let ans = document.getElementById('m'+i).value.toUpperCase(); 
+      if(ans === answers.matching['m'+i]) score++; 
+    }
+    for(let i=11; i<=20; i++){ 
+      let selected = document.querySelector(`input[name="q${i}"]:checked`); 
+      if(selected && selected.value[0] === answers.mcq['q'+i]) score++; 
+    }
     
-    let nama = document.getElementById('nama').value;
-    let kelas = document.getElementById('kelas').value;
+    let data = {
+      nama: document.getElementById('nama').value,
+      kelas: document.getElementById('kelas').value,
+      skor: score,
+      essay: "Menunggu koreksi guru"
+    };
     
-    document.getElementById('result').innerHTML = 
-    `<b>DATA SISWA:</b> ${nama} - ${kelas} <br>
-     Nilai PG + Matching: <span class="correct">${score} / 20</span> <br>
-     Nilai Essay: Diisi Guru 0-5 <br>
-     <b>Nilai Akhir: ${score} / 25</b>`;
-    document.querySelector('.btn').disabled = true;
+    // KIRIM KE GOOGLE SHEET
+    fetch('https://script.google.com/macros/s/AKfycbyKl1ZcStM9SrkyGoloXZML2gq8zyYIKz1UGpIF24pvmX7o8obOHEuOPSNul7I-pKX2/exec', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    }).then(res => {
+      document.getElementById('result').innerHTML = 
+      `<b>DATA SISWA:</b> ${data.nama} - ${data.kelas} <br>
+       Nilai PG + Matching: <span class="correct">${score} / 20</span> <br>
+       Nilai Essay: Diisi Guru 0-5 <br>
+       <b>Nilai Akhir Sementara: ${score} / 25</b> <br>
+       ✅ Jawaban sudah terkirim ke Guru`;
+      document.querySelector('.btn').disabled = true;
+    }).catch(err => {
+      alert('Gagal kirim data. Cek koneksi internet');
+    });
 }
 </script>
 </body>
