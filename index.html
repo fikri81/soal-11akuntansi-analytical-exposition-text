@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal ESP Accounting - Kelas 11</title>
+<meta name="google" content="notranslate">
+<style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f9; color: #333; margin: 0; padding: 20px; user-select: none; -webkit-user-select: none; }
+    .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .header { text-align: center; border-bottom: 3px solid #004a99; padding-bottom: 15px; margin-bottom: 25px; }
+    .logo { width: 120px; height: auto; margin-bottom: 10px; }
+    h1 { color: #004a99; margin: 5px 0; }
+    h2 { color: #004a99; border-bottom: 2px solid #e0e0e0; padding-bottom: 8px; margin-top: 30px; }
+    .student-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; background: #eaf3ff; padding: 15px; border-radius: 8px; }
+    .student-info input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; }
+    .instructions { background: #fff3cd; padding: 15px; border-left: 5px solid #ffc107; border-radius: 5px; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; }
+    .question p { font-weight: bold; }
+    .options label { display: block; margin: 5px 0; cursor: pointer; }
+    .matching { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .matching ul { list-style: none; padding: 0; width: 48%; }
+    .matching li { background: #f9f9f9; margin: 8px 0; padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
+    .matching input { width: 40px; text-align: center; }
+    textarea { width: 100%; height: 100px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; font-family: inherit; }
+    .btn { background: #004a99; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; display: block; margin: 20px auto; }
+    .btn:hover { background: #003366; }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+    #result { text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px; }
+    .correct { color: green; }
+    .wrong { color: red; }
+    .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #777; }
+    #ss-warning { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); color: white; z-index: 9999; justify-content: center; align-items: center; text-align: center; font-size: 24px; }
+    .locked { pointer-events: none; opacity: 0.5; }
+</style>
+</head>
+<body oncontextmenu="return false">
+
+<div id="ss-warning">
+    ⚠️ SCREENSHOT TERDETEKSI! <br> Nilai kamu akan di-reset.
+</div>
+
+<div class="container">
+    <div class="header">
+        <img src="https://i.imgur.com/Rq7YW87.png" alt="Logo" class="logo" draggable="false">
+        <h1>ENGLISH FOR SPECIFIC PURPOSES</h1>
+        <h2>Accounting - Grade 11</h2>
+        <p><b>Analytical Exposition Text: The Vital Role of Accounting in Business</b></p>
+    </div>
+
+    <!-- DATA SISWA -->
+    <div class="student-info">
+        <div>
+            <label><b>Nama Siswa:</b></label>
+            <input type="text" id="nama" placeholder="Ketik nama lengkap" required>
+        </div>
+        <div>
+            <label><b>Kelas:</b></label>
+            <input type="text" id="kelas" placeholder="Contoh: XI AKL 1" required>
+        </div>
+        <div>
+            <label><b>No. Absen:</b></label>
+            <input type="number" id="absen" placeholder="Contoh: 15" required>
+        </div>
+        <div>
+            <label><b>Tanggal:</b></label>
+            <input type="text" id="tanggal" readonly>
+        </div>
+    </div>
+    <button type="button" class="btn" onclick="startQuiz()">MULAI KERJAKAN</button>
+
+    <div id="quizArea" class="locked">
+        <div class="instructions">
+            <b>ATURAN:</b> Dilarang Klik Kanan, Translate, dan Screenshot. Pelanggaran akan mereset nilai.
+        </div>
+
+        <form id="quizForm">
+            <!-- PART A: MATCHING -->
+            <h2>Part A: Vocabulary Matching [10 Points]</h2>
+            <div class="matching">
+                <ul><b>Column A</b>
+                    <li>1. Cash flow <input type="text" id="m1" maxlength="1"></li>
+                    <li>2. Balance sheet <input type="text" id="m2" maxlength="1"></li>
+                    <li>3. Income statement <input type="text" id="m3" maxlength="1"></li>
+                    <li>4. Stakeholders <input type="text" id="m4" maxlength="1"></li>
+                    <li>5. Compliance <input type="text" id="m5" maxlength="1"></li>
+                </ul>
+                <ul><b>Column B</b>
+                    <li>A. Obeying rules, laws, or regulations.</li>
+                    <li>B. Revenues and expenses over a period.</li>
+                    <li>C. Parties that have interest in a company.</li>
+                    <li>D. Assets, liabilities, and equity at a point.</li>
+                    <li>E. Money transferred into and out of business.</li>
+                </ul>
+            </div>
+            <div class="matching">
+                <ul><b>Column A</b>
+                    <li>6. Debit <input type="text" id="m6" maxlength="1"></li>
+                    <li>7. Credit <input type="text" id="m7" maxlength="1"></li>
+                    <li>8. Depreciation <input type="text" id="m8" maxlength="1"></li>
+                    <li>9. Assets <input type="text" id="m9" maxlength="1"></li>
+                    <li>10. Equity <input type="text" id="m10" maxlength="1"></li>
+                </ul>
+                <ul><b>Column B</b>
+                    <li>F. Increases liability, equity, or revenue.</li>
+                    <li>G. Allocate cost of asset over useful life.</li>
+                    <li>H. Increases asset or expense.</li>
+                    <li>I. Owner's claim after deducting liabilities.</li>
+                    <li>J. Resources owned by a company.</li>
+                </ul>
+            </div>
+
+            <!-- PART B: MULTIPLE CHOICE -->
+            <h2>Part B: Multiple Choice [10 Points]</h2>
+            <div id="mcq"></div>
+
+            <!-- PART C: ESSAY -->
+            <h2>Part C: Essay [5 Points]</h2>
+            <div id="essay"></div>
+
+            <button type="button" class="btn" onclick="submitQuiz()">SUBMIT JAWABAN</button>
+            <div id="result"></div>
+        </form>
+    </div>
+    <div class="footer">© Latihan Soal ESP Accounting Kelas 11</div>
+</div>
+
+<script>
+// ISI TANGGAL OTOMATIS
+document.getElementById('tanggal').value = new Date().toLocaleDateString('id-ID', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+
+// ANTI CHEAT
+document.addEventListener('keydown', e => { if(e.ctrlKey || e.key === 'F12' || e.key === 'PrintScreen') { e.preventDefault(); showWarning(); }});
+document.addEventListener('visibilitychange', () => { if (document.hidden) showWarning(); });
+function showWarning() { document.getElementById('ss-warning').style.display = 'flex'; setTimeout(() => location.reload(), 2000); }
+
+// MULAI KUIS
+function startQuiz() {
+    if(document.getElementById('nama').value === '' || document.getElementById('kelas').value === '' || document.getElementById('absen').value === '') {
+        alert('Lengkapi Nama, Kelas, dan No Absen dulu!');
+        return;
+    }
+    document.getElementById('quizArea').classList.remove('locked');
+}
+
+// DATA JAWABAN
+const answers = {matching: {m1:'E',m2:'D',m3:'B',m4:'C',m5:'A',m6:'H',m7:'F',m8:'G',m9:'J',m10:'I'},mcq: {q11:'B',q12:'B',q13:'A',q14:'C',q15:'B',q16:'C',q17:'B',q18:'C',q19:'B',q20:'B'}};
+
+// GENERATE SOAL
+const mcqData = [
+    ["11. Why is accounting called 'language of business'?", ["A. Special codes","B. Track and communicate financial info","C. Only for big corp","D. Translate docs"],"B"],
+    ["12. Main function for financial tracking?", ["A. Pay salaries","B. Systematic record of transactions","C. Design logos","D. Advertise"],"B"],
+    ["13. Managers use Balance Sheet and Income Statement to...", ["A. Plan budgets and cut costs","B. Hire employees","C. File legal docs","D. Marketing"],"A"],
+    ["14. Risk of failing legal compliance?", ["A. More customers","B. Tax refunds","C. Penalties, audits, legal disputes","D. More profit"],"C"],
+    ["15. How does transparent accounting build investor confidence?", ["A. Hiding problems","B. Proves business is viable","C. Reduce employees","D. Increase prices"],"B"],
+    ["16. Debit increases which account?", ["A. Liability","B. Revenue","C. Asset or Expense","D. Equity"],"C"],
+    ["17. Fundamental accounting equation?", ["A. A = L - E","B. A = L + E","C. R = E + P","D. C = I - C"],"B"],
+    ["18. Purpose of depreciation?", ["A. Increase asset value","B. Record massive expense","C. Allocate cost over useful life","D. Calculate bonuses"],"C"],
+    ["19. Example of stakeholder?", ["A. Computer","B. Investor or Customer","C. Building","D. Policy"],"B"],
+    ["20. Without precise accounting, business...", ["A. More efficient","B. Operating blindly","C. More profit","D. Less tax"],"B"]
+];
+const essayData = [
+    "21. Explain why accounting is indispensable for any business entity.",
+    "22. Describe how Balance Sheet and Income Statement help managers.",
+    "23. Consequences if company does not comply with tax laws?",
+    "24. Explain difference between debit and credit.",
+    "25. Why use depreciation instead of full cost in purchase year?"
+];
+let mcqHTML = ''; mcqData.forEach((q,i) => { mcqHTML += `<div class="question"><p>${q[0]}</p><div class="options">`; q[1].forEach(opt => mcqHTML += `<label><input type="radio" name="q${i+11}" value="${opt[0]}"> ${opt}</label>`); mcqHTML += `</div></div>`;}); document.getElementById('mcq').innerHTML = mcqHTML;
+let essayHTML = ''; essayData.forEach((q,i) => essayHTML += `<div class="question"><p>${q}</p><textarea name="q${i+21}"></textarea></div>`); document.getElementById('essay').innerHTML = essayHTML;
+
+// SUBMIT
+function submitQuiz() {
+    let score = 0; 
+    for(let i=1; i<=10; i++){ let ans = document.getElementById('m'+i).value.toUpperCase(); if(ans === answers.matching['m'+i]) score++; }
+    for(let i=11; i<=20; i++){ let selected = document.querySelector(`input[name="q${i}"]:checked`); if(selected && selected.value[0] === answers.mcq['q'+i]) score++; }
+    
+    let nama = document.getElementById('nama').value;
+    let kelas = document.getElementById('kelas').value;
+    
+    document.getElementById('result').innerHTML = 
+    `<b>DATA SISWA:</b> ${nama} - ${kelas} <br>
+     Nilai PG + Matching: <span class="correct">${score} / 20</span> <br>
+     Nilai Essay: Diisi Guru 0-5 <br>
+     <b>Nilai Akhir: ${score} / 25</b>`;
+    document.querySelector('.btn').disabled = true;
+}
+</script>
+</body>
+</html>
